@@ -1,3 +1,5 @@
+# 3Sum Solution
+
 from collections import defaultdict
 class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
