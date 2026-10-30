@@ -1,24 +1,33 @@
-# 3Sum Solution
-
-from collections import defaultdict
 class Solution:
     def threeSum(self, nums: list[int]) -> list[list[int]]:
-        output = []
-        output_map = defaultdict(list)
+        n = len(nums)
+        nums = sorted(nums)
+        result = []
 
-        for i in range(len(nums) - 1):
-            seen = {}
-            target = 0 - nums[i]
-            for j in range(i+1, len(nums)):
-                compliment = target - nums[j]
-                if compliment in seen:
-                    triplet = [nums[i],nums[j],compliment]
-                    sorted_triplet = tuple(sorted(triplet))
-                    output_map[sorted_triplet].append(triplet)
-                    # output.append([nums[i],nums[j],compliment])
-                seen[nums[j]] = j
+        for i in range(n-2):
 
-        for key in output_map.keys():   
-            output.append(key) 
+            if nums[i] > 0:
+                break
+            
+            if i > 0 and nums[i] == nums[i-1]:
+                continue
 
-        return output
+            left = i + 1
+            right = n - 1
+
+            while left < right:
+                total = nums[i] + nums[left] + nums[right]
+
+                if total > 0:
+                    right -= 1
+                elif total < 0:
+                    left += 1
+                else:
+                    result.append([nums[i], nums[left], nums[right]])
+                    left += 1
+                    right -= 1
+
+                    while left < right and nums[left] == nums[left-1]:
+                        left += 1
+        
+        return result
